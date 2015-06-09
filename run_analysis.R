@@ -47,4 +47,4 @@ rm(subj_merged, y_merged, x_merged, activities, features, meanstd_columns)
 tidy_average <- summarise_each(group_by(tidy, Activity, Subject),funs(mean))
 
 ## Write to file, all done!
-write.table(tidy,"tidy_data.txt",row.names=FALSE)
+write.table(tidy_average,"tidy_data.txt",row.names=FALSE)
