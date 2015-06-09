@@ -9,9 +9,16 @@
 
 
 ## Definitions
-activity.labels <- read.csv("data/activity_labels.txt",header=FALSE,sep=" ")
+
 
 ## Libraries
 library(dplyr)
 
-## 
+## Load data
+x_train    <- read.table("UCI HAR Dataset/train/X_train.txt", header = FALSE)
+y_train    <- read.table("UCI HAR Dataset/train/y_train.txt", header = FALSE)
+subj_train <- read.table("UCI HAR Dataset/train/subject_train.txt", header = FALSE)
+x_test     <- read.table("UCI HAR Dataset/test/X_test.txt", header = FALSE)
+y_test     <- read.table("UCI HAR Dataset/test/y_test.txt", header = FALSE)
+subj_test  <- read.table("UCI HAR Dataset/test/subject_test.txt", header = FALSE)
+activities <- read.table("data/activity_labels.txt",header = FALSE)
