@@ -9,7 +9,7 @@
 
 
 ## Definitions
-
+activity.labels <- read.csv("data/activity_labels.txt",header=FALSE,sep=" ")
 
 ## Libraries
 library(dplyr)
