@@ -21,4 +21,4 @@ subj_train <- read.table("UCI HAR Dataset/train/subject_train.txt", header = FAL
 x_test     <- read.table("UCI HAR Dataset/test/X_test.txt", header = FALSE)
 y_test     <- read.table("UCI HAR Dataset/test/y_test.txt", header = FALSE)
 subj_test  <- read.table("UCI HAR Dataset/test/subject_test.txt", header = FALSE)
-activities <- read.table("data/activity_labels.txt",header = FALSE)
+activities <- read.table("UCI HAR Dataset/activity_labels.txt",header = FALSE)
