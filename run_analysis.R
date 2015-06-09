@@ -1,15 +1,6 @@
-# You should create one R script called run_analysis.R that does the following. 
-# Merges the training and the test sets to create one data set.
-# Extracts only the measurements on the mean and standard deviation for each measurement. 
-# Uses descriptive activity names to name the activities in the data set
-# Appropriately labels the data set with descriptive variable names. 
-# From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
-
-## Also fill in README.md and CODEBOOK.md
-
-
-## Definitions
-
+## This file contains the code necessary to complete the Course Project for
+## Coursera's Getting and Cleaning Data course.
+## Please see README.md and CODEBOOK.md for more information
 
 ## Libraries
 library(dplyr)
@@ -30,7 +21,7 @@ print("Finished loading data")
 ## Merge training and test data
 x_merged <- rbind(x_train,x_test)
 y_merged <- rbind(y_train,y_test)
-subj_merged <- rbind (subj_train,subj_test)
+subj_merged <- rbind(subj_train,subj_test)
 rm(x_train,y_train,subj_train,x_test,y_test,subj_test)
 print("Merged training and test data")
 
@@ -38,10 +29,22 @@ print("Merged training and test data")
 features[,2] <- gsub("\\(","",features[,2])
 features[,2] <- gsub("\\)","",features[,2])
 features[,2] <- gsub(",","-",features[,2])
+subj_merged <- rename(subj_merged, Subject = V1)
 colnames(x_merged) <- features[,2]
-y_merged <- merge(y_merged,activities, by.x="V1",by.y="ID") 
+y_merged <- merge(y_merged,activities, by.x="V1",by.y="ID")
 y_merged <- select(y_merged,Activity)
+print("Finished cleaning")
+
+## Subset only columns with mean or std
+meanstd_columns <- names(x_merged[,grep("mean|std", names(x_merged))])
+x_merged <- x_merged[,meanstd_columns]
 
 ## Combine all data and cleanup
 tidy <- cbind(subj_merged, y_merged, x_merged)
-rm(subj_merged, y_merged, x_merged)
+rm(subj_merged, y_merged, x_merged, activities, features, meanstd_columns)
+
+## Create tidy set with average of each variable by activity & subject (related: dplyr rocks!)
+tidy_average <- summarise_each(group_by(tidy, Activity, Subject),funs(mean))
+
+## Write to file, all done!
+write.table(tidy,"tidy_data.txt",row.names=FALSE)
